@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黄河纹物志 - 黄河文化数字文创平台</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #d4a017; /* 黄河金色 */
+            --secondary: #8b4513; /* 大地棕色 */
+            --accent: #1e6fa9; /* 黄河蓝色 */
+            --light: #f8f3e6; /* 浅米色 */
+            --dark: #3a2615; /* 深棕色 */
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23d4a017"/><path d="M0,300 Q300,200 600,300 T1200,300 L1200,600 L0,600 Z" fill="%238b4513"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            background-color: #155a8a;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--accent);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            padding: 80px 0;
+            background-color: white;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 20px auto 0;
+        }
+        
+        .overview-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .overview-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: var(--light);
+        }
+        
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .overview-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        /* 服务模块 */
+        .services {
+            padding: 80px 0;
+        }
+        
+        .services-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 25px;
+            background-color: white;
+            border: none;
+            border-radius: 30px;
+            margin: 0 10px 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .service-card .icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* 创作者展示 */
+        .creators {
+            padding: 80px 0;
+            background-color: white;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .creator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .creator-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            background-color: var(--light);
+        }
+        
+        .creator-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .creator-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .creator-card h3 {
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .creator-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* CTA区域 */
+        .cta {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--secondary);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <span class="logo-icon">🌊</span>
+                    黄河纹物志
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#overview">项目概述</a></li>
+                    <li><a href="#services">服务模块</a></li>
+                    <li><a href="#creators">创作者</a></li>
+                    <li><a href="#cta">加入我们</a></li>
+                </ul>
+                <div class="menu-toggle">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>黄河纹物志 - 文化解码，共创共生</h1>
+            <p>数字化菏泽黄河文化IP的共创平台，融合设计美学与技术，连接创意与制造，让黄河文化焕发新生</p>
+            <a href="#services" class="btn">探索服务</a>
+            <a href="#cta" class="btn btn-outline">加入共创</a>
+        </div>
+    </section>
+
+    <!-- 项目概述 -->
+    <section class="project-overview" id="overview">
+        <div class="container">
+            <div class="section-title">
+                <h2>项目概述</h2>
+                <p>山东菏泽作为黄河入鲁首站，拥有丰富农耕文明、非遗技艺和历史典故。"黄河纹物志"项目应运而生，旨在通过商业创新推动文化活化。</p>
+            </div>
+            <div class="overview-content">
+                <div class="overview-card">
+                    <div class="card-icon">🏛️</div>
+                    <h3>文化IP数据库</h3>
+                    <p>系统扫描菏泽黄河文化元素，形成结构化文化基因库，为创意活动提供标准化文化原材料。</p>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">🎨</div>
+                    <h3>智能设计与共创中心</h3>
+                    <p>AI设计助手降低设计门槛，创作者社区形成UGC生态，定期举办主题挑战孵化产品。</p>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">🛒</div>
+                    <h3>柔性定制与电商服务</h3>
+                    <p>一键定制系统连接用户与本地企业，集成化电商平台支持创作者销售，数字资产商城探索文化数字化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务模块 -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>服务模块</h2>
+                <p>构建多层次、相互赋能的服务体系，面向消费者、创作者与产业伙伴</p>
+            </div>
+            
+            <div class="services-tabs">
+                <button class="tab-btn active" data-tab="c-end">C端消费者</button>
+                <button class="tab-btn" data-tab="b-creator">B端创作者</button>
+                <button class="tab-btn" data-tab="b-partner">B端产业伙伴</button>
+            </div>
+            
+            <div class="tab-content active" id="c-end">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="icon">🎁</div>
+                        <h3>个性化定制服务</h3>
+                        <p>用户可通过平台利用文化IP数据库和AI设计助手自主设计文创产品，满足个性化及文化叙事追求。</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon">📦</div>
+                        <h3>主题式文创产品盒</h3>
+                        <p>定期推出限量文创产品，如"菏泽牡丹工笔画体验盒"、"黄河泥沙陶瓷制作包"，提供沉浸式动手文化体验。</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon">🖼️</div>
+                        <h3>数字藏品与AR体验</h3>
+                        <p>销售实体文创产品附赠区块链认证的限量数字藏品，通过AR技术触发文化故事动画，创造虚实融合消费体验。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="b-creator">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="icon">🛠️</div>
+                        <h3>SaaS式设计工具</h3>
+                        <p>提供高级会员权益：无损源文件下载、更多AI生成额度及云协作空间，成为设计师的灵感与效率工具。</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon">💼</div>
+                        <h3>创作者市场</h3>
+                        <p>为创作者提供线上店铺，可上架设计图稿、成品模型或定制服务。平台负责供应链、生产和销售，创作者按销售额分成。</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon">⚖️</div>
+                        <h3>版权保护与法律服务</h3>
+                        <p>使用区块链技术为设计作品提供时间戳存证，与律师事务所合作为创作者提供版权登记咨询和维权支持。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="b-partner">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="icon">🤝</div>
+                        <h3>文化IP授权与联名开发</h3>
+                        <p>向本地制造商、景区和品牌授权使用平台文化IP或设计师作品，助力传统产业实现产品与品牌的文化升级。</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon">🏭</div>
+                        <h3>供应链对接与柔性制造</h3>
+                        <p>整合C端和B端零散订单，分发给认证的本地供应链企业生产，为中小制造商提供稳定多样化订单。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 创作者展示 -->
+    <section class="creators" id="creators">
+        <div class="container">
+            <div class="section-title">
+                <h2>优秀创作者</h2>
+                <p>汇聚众多优秀设计师与创意人才，共同推动黄河文化创新</p>
+            </div>
+            <div class="creator-grid">
+                <div class="creator-card">
+                    <div class="creator-avatar">张</div>
+                    <h3>张明远</h3>
+                    <p>非遗传承人</p>
+                    <p>擅长黄河泥塑与陶瓷艺术</p>
+                </div>
+                <div class="creator-card">
+                    <div class="creator-avatar">李</div>
+                    <h3>李思雨</h3>
+                    <p>平面设计师</p>
+                    <p>专注于黄河纹样现代化设计</p>
+                </div>
+                <div class="creator-card">
+                    <div class="creator-avatar">王</div>
+                    <h3>王艺轩</h3>
+                    <p>数字艺术家</p>
+                    <p>创作黄河文化主题数字作品</p>
+                </div>
+                <div class="creator-card">
+                    <div class="creator-avatar">赵</div>
+                    <h3>赵文博</h3>
+                    <p>产品设计师</p>
+                    <p>将黄河元素融入实用产品设计</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA区域 -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <h2>加入黄河文化创新之旅</h2>
+            <p>无论您是消费者、创作者还是产业伙伴，都能在"黄河纹物志"找到属于您的角色，共同推动黄河文化焕发新生。</p>
+            <a href="#" class="btn">立即注册</a>
+            <a href="#" class="btn btn-outline">了解更多</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>黄河纹物志</h3>
+                    <p>数字化菏泽黄河文化IP的共创平台，融合设计美学与技术，连接创意与制造。</p>
+                    <div class="social-links">
+                        <a href="#">微</a>
+                        <a href="#">博</a>
+                        <a href="#">抖</a>
+                        <a href="#">B</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#overview">项目概述</a></li>
+                        <li><a href="#services">服务模块</a></li>
+                        <li><a href="#creators">创作者</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>服务</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">个性化定制</a></li>
+                        <li><a href="#">文创产品盒</a></li>
+                        <a href="#">数字藏品</a></li>
+                        <li><a href="#">设计工具</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li>地址：山东省菏泽市黄河文化创意园</li>
+                        <li>电话：0530-1234567</li>
+                        <li>邮箱：contact@huanghewenwu.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 黄河纹物志 - 黄河文化数字文创平台. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 移除所有active类
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // 添加active类到当前按钮和对应内容
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 移动端点击后关闭菜单
+                    if(window.innerWidth <= 768) {
+                        document.querySelector('.nav-links').classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
